@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumbi — Mobilidade Inteligente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="style/usuario.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="../style/mapa.css">
+    <link rel="stylesheet" href="../style/priva.css">
+    <link rel="stylesheet" href="../style/usuario.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+  
+</head>
+
+<body>
+    <!-- Cabeçalho Elegante com Barra de Pesquisa -->
+    <header class="cabecalho">
+        <!-- Logo -->
+        <div class="container-logo">
+            <a href="inicio.html" class="logo-link">
+                <img src="../image/kumbi2.png" alt="Logo Kumbi" class="logo-imagem">
+                <h1 class="titulo-logo">Kumbi</h1>
+            </a>
+        </div>
+
+        <!-- Barra de Pesquisa Central -->
+        <div class="container-pesquisa">
+            <form class="formulario-pesquisa" action="#" method="get">
+                <input type="search" class="campo-pesquisa" placeholder="Pesquisar rotas, motoristas, empresas..."
+                    name="pesquisa" aria-label="Campo de pesquisa">
+                <button type="submit" class="botao-pesquisa" aria-label="Botão de pesquisa">
+                    <i class="fa-solid fa-magnifying-glass icone-pesquisa"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Navegação Principal -->
+        <nav class="navegacao" aria-label="Navegação principal">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao">
+                    <a href="#inicio" class="link-item ">
+                        <i class="fa-solid fa-home-alt icone-link"></i>
+                        <span>Início</span>
+                        <span class="indicador-ativo"></span>
+                    </a>
+                </li>
+                <li class="item-navegacao">
+                    <a href="motorista.html" class="link-item">
+                        <i class="fa-solid fa-bus-alt icone-link"></i>
+                        <span>Motorista</span>
+                        <span class="indicador-ativo"></span>
+                    </a>
+                </li>
+                <li class="item-navegacao">
+                    <a href="#empresa" class="link-item">
+                        <i class="fa-solid fa-building icone-link"></i>
+                        <span>Empresa</span>
+                        <span class="indicador-ativo"></span>
+                    </a>
+                </li> <br>
+                <li class="item-navegacao">
+                    <button onclick="pagar()" class="botao-pesquisa">Pagar Corrida</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Conteúdo da Página -->
+    <section class="secao-mapa">
+        <div id="caixa-mapa">
+            <div id="map"></div>
+        </div>
+        
+    </section>
+
+
+    <!-- Navegação para Mobile -->
+    <nav class="navegacao-mobile" aria-label="Navegação mobile">
+        <ul class="lista-navegacao-mobile">
+            <li class="item-navegacao-mobile">
+                <a href="#inicio" class="link-item-mobile ">
+                    <i class="fa-solid fa-home-alt icone-mobile"></i>
+                    <span>Início</span>
+                </a>
+            </li>
+            <li class="item-navegacao-mobile">
+                <a href="motorista.html" class="link-item-mobile">
+                    <i class="fa-solid fa-bus-alt icone-mobile"></i>
+                    <span>Motorista</span>
+                </a>
+            </li>
+            <li class="item-navegacao-mobile">
+                <a href="#empresa" class="link-item-mobile">
+                    <i class="fa-solid fa-building icone-mobile"></i>
+                    <span>Empresa</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    
+</body>
+
+</html>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="./js/websocket.js"></script> -->
+<script src="../js/mapa.js"></script>
+

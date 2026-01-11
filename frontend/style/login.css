@@ -1,0 +1,301 @@
+:root {
+  --primary: #FFFFFF;
+  --texto_primario: #1A2A36;
+  --branco_neutro:#f4f4f4;
+  --texto_secundario: #4A3A36;
+  --icones: #2D3648;
+  --azul_escuro: #133D7A;
+  --azul_medio: #1E4F9A;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+body {
+
+  font-family: 'Poppins',sans-serif;
+}
+/* ====== Modal Styles 
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: var(--primaria);
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark-mode .modal-content {
+      background-color: var(--card-escuro);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--texto-escuro);
+    }
+
+    .dark-mode .close-modal {
+      color: var(--texto-claro);
+    }
+
+    .modal h2 {
+      margin-bottom: 20px;
+      color: var(--texto-escuro);
+    }
+
+    .dark-mode .modal h2 {
+      color: var(--texto-claro);
+    }
+
+    .modal-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      margin-bottom: 8px;
+      color: var(--texto-escuro);
+      font-weight: 500;
+    }
+
+    .dark-mode .form-group label {
+      color: var(--texto-claro);
+    }
+
+    .form-group input {
+      height: 40px;
+      padding: 5px 12px;
+      border: 1px solid var(--neutra_escura);
+      border-radius: 6px;
+      background: var(--primaria);
+      color: var(--texto-escuro);
+      font-size: 16px;
+    }
+
+    .dark-mode .form-group input {
+      background: var(--card-escuro);
+      border: 1px solid var(--muted);
+      color: var(--texto-claro);
+    }
+
+    .btn-signup {
+      background-color: var(--destaque);
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-signup:hover {
+      background-color: var(--destaque-escuro);
+    }
+
+    .modal-form p {
+      text-align: center;
+      margin-top: 15px;
+      color: var(--texto-escuro);
+    }
+
+    .dark-mode .modal-form p {
+      color: var(--texto-claro);
+    }
+
+    .modal-form a {
+      color: var(--destaque);
+    }
+
+    #recuperar_senha {
+      margin-top: 5px;
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn-login {
+      border-radius: 7px;
+      border: 2px solid var(--destaque);
+      padding: 8px 16px;
+      font-size: 14px;
+      transition: 0.4s ease-in-out;
+      color: var(--destaque);
+      font-weight: 600;
+    }
+
+    .btn-login:hover {
+      background-color: var(--destaque);
+      color: var(--texto-escuro);
+    }
+
+    .btn-signup-header {
+      background-color: var(--destaque);
+      border-radius: 7px;
+      padding: 8px 16px;
+      font-size: 14px;
+      transition: 0.4s ease-in-out;
+      color: var(--texto-escuro);
+      font-weight: 600;
+    }
+
+    .btn-signup-header:hover {
+      border: 2px solid var(--destaque);
+      background-color: transparent;
+      color: var(--destaque);
+    }
+====== */
+
+/* ====== modal ====== */
+
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  flex-direction: column;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: var(--primary);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--texto-escuro);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  color: var(--texto_primario);
+  font-weight: 500;
+}
+
+.form-group input {
+  height: 40px;
+  padding: 5px 12px;
+  border: 1px solid var(--azul_escuro);
+  border-radius: 6px;
+  background: #f0f0f0;
+  color: var(--texto_primario);
+  font-size: 16px;
+}
+
+.btn-signup {
+  background-color: var(--azul_medio);
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 15px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-signup:hover {
+  background-color: var(--azul_escuro);
+}
+
+.modal-form p {
+  text-align: center;
+  margin-top: 15px;
+  color: var(--texto-escuro);
+}
+
+.modal-form a {
+  color: var(--azul_medio);
+}
+
+.recuperar_senha {
+  margin: 9px 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo_modal {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 20px;
+}
+.logo_modal img {
+  width: 80px;
+  height: auto;
+}
+.Btncriarconta {
+  background-color:#f0f0f0;
+  border-radius: 7px;
+  padding: 8px 16px;
+  width: 200px;
+  height: 58px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+  color: var(--texto_primario);
+  font-weight: 600;
+  border: none;
+  transition: .4s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+.Btncriarconta:hover{
+  background-color: #e7e6e6;
+}
+#signupModal{
+  display: none;
+}
+/* ====== Fim modal ====== */

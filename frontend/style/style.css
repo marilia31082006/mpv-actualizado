@@ -1,0 +1,32 @@
+
+:root {
+    --primary:#FFFFFF;
+    --branco_neutro:#f4f4f4;
+    --texto_primario:#1A2A36;
+    --texto_secundario:#4A3A36;
+    --icones:#2D3648;
+    --azul_escuro:#133D7A;
+    --azul_medio: #1E4F9A;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+
+}
+
+/* ====== Tela Inicial ====== */

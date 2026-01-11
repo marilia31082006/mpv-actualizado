@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>KUMBI | Login e Cadastro</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="main_plash">
+<div class="container">
+  <div class="left">
+    <h1>KUMBI</h1>
+    <h2>Gestão de mobilidade inteligente</h2>
+    <p>A sua solução de gestão de frotas e mobilidade</p>
+
+    <button id="btnRegister">Criar conta</button>
+    <button class="outline"><a href="./html/index5.html">Saiba mais</a></button>
+  </div>
+
+  <div class="right">
+    <div id="loginChoice">
+      <button onclick="openLogin('empresa')" class="nbt">🏢 Entrar como empresa</button>
+      <button onclick="openLogin('cidadao')" class="nbt">👤 Entrar como cidadão</button>
+    </div>
+
+    <form id="authForm" class="hidden">
+      <h3 id="formTitle"></h3>
+
+      <input type="email" id="email" placeholder="Email" required>
+      <small id="emailMsg"></small>
+
+      <input type="password" id="password" placeholder="Senha" required>
+      <small id="passwordMsg"></small>
+
+      <div id="confirmBox" class="hidden">
+        <input type="password" id="confirmPassword" placeholder="Confirmar senha">
+        <small id="confirmMsg"></small>
+      </div>
+
+      <button type="submit" id="submitBtn"></button>
+      <p id="switchMode"></p>
+    </form>
+  </div>
+</div>
+</div>
+<div class="telaIncial">
+    <div class="content_telaInicial">
+      <div class="logo">
+        <img src="../image/kumbi2.png" alt="">
+        <h1>Kumbi</h1>
+      </div>
+      <div class="telaInialText">
+        <p> Mobilidade inteligente</p>
+      </div>
+    </div>
+</div>
+<script src="./js/index.js"></script>
+</body>
+</html>
