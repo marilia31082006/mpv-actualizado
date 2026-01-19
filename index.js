@@ -9,7 +9,7 @@ const telaIncial = document.querySelector('.telaIncial')
       telaIncial.style.display = 'none'
       main_plash.style.opacity= '1'
       main_plash.style.transition = 'opacity 0.9s'
-      location.href='./html/index0.html'
+      location.href='../frontend/html/index0.html'
     },8000
  )
 
