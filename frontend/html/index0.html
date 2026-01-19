@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>KUMBI | Login e Cadastro</title>
+  <link rel="stylesheet" href="../css/styles0.css">
+</head>
+<body>
+  <button class="modo" id="toggle-theme">🌙</button>
+<div class="container">
+  <div class="left">
+    <h1>KUMBI</h1>
+    <h2>Gestão de mobilidade inteligente</h2>
+    <p>A sua solução de gestão de frotas e mobilidade</p>
+
+    <button id="btnRegister">Criar conta</button>
+    <button class="outline"><a href="index5.html" class="b">Saiba mais</a></button>
+  </div>
+
+  <div class="right">
+    <div id="loginChoice">
+      <button class="a" onclick="openLogin('empresa')">🏢 Entrar como empresa</button>
+      <button class="a" onclick="openLogin('cidadao')">👤 Entrar como cidadão</button>
+    </div>
+
+    <form id="authForm" class="hidden">
+      <h3 id="formTitle"></h3>
+
+      <input type="email" id="email" placeholder="Email" required>
+      <small id="emailMsg"></small>
+
+      <input type="password" id="password" placeholder="Senha" required>
+      <small id="passwordMsg"></small>
+
+      <div id="confirmBox" class="hidden">
+        <input type="password" id="confirmPassword" placeholder="Confirmar senha">
+        <small id="confirmMsg"></small>
+      </div>
+
+      <button type="submit" id="submitBtn"></button>
+      <p id="switchMode"></p>
+    </form>
+  </div>
+</div>
+
+<script src="../js/index0.js"></script>
+</body>
+</html>

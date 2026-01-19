@@ -6,31 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kumbi — Mobilidade Inteligente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="style/usuario.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <link rel="stylesheet" href="../style/mapa.css">
-    <link rel="stylesheet" href="../style/priva.css">
-    <link rel="stylesheet" href="../style/usuario.css">
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
-  
+    <link rel="stylesheet" href="../css/styles1.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+ <!-- <style>
+    #caixa-map{height: 600px;}
+    
+
+</style> 
+     -->
+
 </head>
 
 <body>
-    <!-- Cabeçalho Elegante com Barra de Pesquisa -->
+    <header class="header" id="header">
+        <div class="logo">
+            <a href="#hero">
+                <img src="../image/kumbi2.png" alt="Kumbi Logo">
+                <h1>Kumbi</h1>
+            </a>
+        </div>
+        <nav class="nav">
+            <ul class="navbar">
+                <li> <a class="nav-link" href="#hero" href="./index.html">Início</a></li>
+                <li><a class="nav-link" href="#features">Motorista</a></li>
+                <li><a class="nav-link" href="loginadmin.html">Empresa</a></li>
+                <li>
+                    <a class="nav-link" href="#dashboard" onclick="pagar()">Pagamento</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="box_pesquisa">
+        
+        <div class="container-pesquisa">
+            <form class="formulario-pesquisa" action="#" method="get" autocomplete="off">
+                <input type="search" class="campo-pesquisa" placeholder="Pesquisar rotas...">
+                <button type="submit" class="botao-pesquisa" aria-label="Botão de pesquisa">
+                    <i class="fa-solid fa-magnifying-glass icone-pesquisa"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Cabeçalho Elegante com Barra de Pesquisa 
     <header class="cabecalho">
-        <!-- Logo -->
+        <! Logo 
         <div class="container-logo">
             <a href="inicio.html" class="logo-link">
                 <img src="../image/kumbi2.png" alt="Logo Kumbi" class="logo-imagem">
                 <h1 class="titulo-logo">Kumbi</h1>
             </a>
         </div>
+        -->
 
-        <!-- Barra de Pesquisa Central -->
+    <!-- Barra de Pesquisa Central 
         <div class="container-pesquisa">
-            <form class="formulario-pesquisa" action="#" method="get">
+            <form class="formulario-pesquisa" action="#" method="get" autocomplete="off">
                 <input type="search" class="campo-pesquisa" placeholder="Pesquisar rotas, motoristas, empresas..."
                     name="pesquisa" aria-label="Campo de pesquisa">
                 <button type="submit" class="botao-pesquisa" aria-label="Botão de pesquisa">
@@ -38,8 +71,9 @@
                 </button>
             </form>
         </div>
+        -->
 
-        <!-- Navegação Principal -->
+    <!-- Navegação Principal 
         <nav class="navegacao" aria-label="Navegação principal">
             <ul class="lista-navegacao">
                 <li class="item-navegacao">
@@ -68,15 +102,95 @@
                 </li>
             </ul>
         </nav>
+       
     </header>
+    -->
 
     <!-- Conteúdo da Página -->
-    <section class="secao-mapa">
-        <div id="caixa-mapa">
-            <div id="map"></div>
-        </div>
-        
-    </section>
+    <!-- <section class="secao-mapa">
+         
+    </section> -->
+    <div id="map"></div>
+    
+<script>
+/* ================= MAPA ================= */
+const map = L.map('map').setView([-8.8383, 13.2344], 13);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap"
+}).addTo(map);
+
+/* ================= DESTINO ================= */
+const destino = [-8.8383, 13.2344];
+L.marker(destino).addTo(map).bindPopup("Luanda Centro");
+
+/* ================= MOTORISTA ================= */
+let motoristaPos = [-8.8400, 13.2320];
+const motoristaMarker = L.marker(motoristaPos).addTo(map).bindPopup("Motorista");
+
+const motoristaCaminho = L.polyline([], {
+    color: "blue",
+    weight: 3
+}).addTo(map);
+
+/* ================= GPS UTILIZADOR ================= */
+map.locate({ setView: true, maxZoom: 16 });
+
+map.on('locationfound', e => {
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("Você está aqui")
+        .openPopup();
+
+    desenharRota(e.latlng, destino);
+});
+
+/* ================= ERRO GPS ================= */
+map.on('locationerror', () => {
+    alert("Ative o GPS para ver a sua posição.");
+});
+
+/* ================= ROTA ================= */
+async function desenharRota(origem, destino) {
+    if (window.rota) map.removeLayer(window.rota);
+
+    const url = `https://router.project-osrm.org/route/v1/driving/
+        ${origem.lng},${origem.lat};
+        ${destino[1]},${destino[0]}
+        ?overview=full&geometries=geojson`.replace(/\s+/g, '');
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    const coords = json.routes[0].geometry.coordinates.map(p => [p[1], p[0]]);
+    window.rota = L.polyline(coords, { color: "red", weight: 5 }).addTo(map);
+    map.fitBounds(window.rota.getBounds());
+}
+
+/* ================= MOVIMENTO MOTORISTA ================= */
+setInterval(() => {
+    motoristaPos = [
+        motoristaPos[0] + (Math.random() * 0.001 - 0.0005),
+        motoristaPos[1] + (Math.random() * 0.001 - 0.0005)
+    ];
+
+    motoristaMarker.setLatLng(motoristaPos);
+    motoristaCaminho.addLatLng(motoristaPos);
+}, 2000);
+
+/* ================= PASSAGEIROS ================= */
+const passageiros = [
+    { nome: "Cliente 1", pos: [-8.8390, 13.2300] },
+    { nome: "Cliente 2", pos: [-8.8400, 13.2400] },
+    { nome: "Cliente 3", pos: [-8.8450, 13.2370] }
+];
+
+passageiros.forEach(p => {
+    L.marker(p.pos).addTo(map)
+        .bindPopup(`Passageiro<br>${p.nome}`);
+});
+</script>
+
 
 
     <!-- Navegação para Mobile -->
@@ -89,26 +203,24 @@
                 </a>
             </li>
             <li class="item-navegacao-mobile">
-                <a href="motorista.html" class="link-item-mobile">
+                <a href="index2.html" class="link-item-mobile">
                     <i class="fa-solid fa-bus-alt icone-mobile"></i>
                     <span>Motorista</span>
                 </a>
             </li>
             <li class="item-navegacao-mobile">
-                <a href="#empresa" class="link-item-mobile">
+                <a href="index3.html" class="link-item-mobile">
                     <i class="fa-solid fa-building icone-mobile"></i>
                     <span>Empresa</span>
                 </a>
             </li>
         </ul>
     </nav>
-    
-    
+
+
 </body>
 
 </html>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-<!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="./js/websocket.js"></script> -->
-<script src="../js/mapa.js"></script>
 
+<!-- <script src="./js/websocket.js"></script> -->
+<!-- <script src="./js/mapa.js"></script> -->
