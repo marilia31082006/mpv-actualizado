@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUVIKA - Dashboard Empresa</title>
+    <link rel="stylesheet" href="../../css/empresa.css">
+    <link rel="stylesheet" href="../../css/mapa.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+</head>
+<body>
+    <!-- Sidebar Empresa -->
+    <div class="sidebar-empresa">
+        <div class="empresa-header">
+            <div class="empresa-logo">
+                <i class="fas fa-building"></i>
+                <div class="empresa-info">
+                    <h3 id="empresaNome">Transangol Ltda</h3>
+                    <p class="empresa-nif">NIF: 5001234567</p>
+                </div>
+            </div>
+            <button class="btn-menu-empresa" id="menuToggleEmpresa">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="empresa-status">
+            <div class="status-summary">
+                <div class="status-item">
+                    <span class="status-label">Frota Ativa</span>
+                    <span class="status-value" id="frotaAtiva">24/30</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Operação</span>
+                    <span class="status-value online">Online</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="empresa-nav">
+            <a href="dashboard.html" class="empresa-nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="frota.html" class="empresa-nav-item">
+                <i class="fas fa-bus"></i>
+                <span>Frota</span>
+                <span class="badge" id="frotaBadge">30</span>
+            </a>
+            <a href="motoristas.html" class="empresa-nav-item">
+                <i class="fas fa-user-tie"></i>
+                <span>Motoristas</span>
+                <span class="badge" id="motoristasBadge">28</span>
+            </a>
+            <a href="rotas.html" class="empresa-nav-item">
+                <i class="fas fa-route"></i>
+                <span>Rotas</span>
+                <span class="badge" id="rotasBadge">12</span>
+            </a>
+            <a href="passageiros.html" class="empresa-nav-item">
+                <i class="fas fa-users"></i>
+                <span>Passageiros</span>
+            </a>
+            <a href="relatorios.html" class="empresa-nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Relatórios</span>
+            </a>
+            <a href="mensagens.html" class="empresa-nav-item">
+                <i class="fas fa-comments"></i>
+                <span>Mensagens</span>
+                <span class="badge badge-alert">9</span>
+            </a>
+            <a href="configuracoes.html" class="empresa-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="empresa-footer">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div>
+                    <h4 id="adminNome">Admin Empresa</h4>
+                    <p class="user-role">Administrador</p>
+                </div>
+            </div>
+            <button class="btn-logout-empresa">
+                <i class="fas fa-sign-out-alt"></i>
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Empresa -->
+    <div class="main-content-empresa">
+        <header class="empresa-main-header">
+            <div class="header-left-empresa">
+                <h1>Dashboard Empresarial</h1>
+                <p class="subtitle-empresa">Monitoramento em tempo real da sua frota</p>
+            </div>
+            <div class="header-right-empresa">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar veículo, motorista, rota...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn-action" id="btnRefreshDashboard">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="btn-action" id="btnAddNew">
+                        <i class="fas fa-plus"></i> Novo
+                    </button>
+                    <div class="notification-empresa">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count-empresa">5</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-card-empresa">
+                <div class="stat-icon" style="background: #E6F7FF;">
+                    <i class="fas fa-bus" style="color: #1890FF;"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalVeiculos">30</h3>
+                    <p>Veículos na Frota</p>
+                </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 12%
+                </div>
+            </div>
+            
+            <div class="stat-card-empresa">
+                <div class="stat-icon" style="background: #F6FFED;">
+                    <i class="fas fa-road" style="color: #52C41A;"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalRotas">12</h3>
+                    <p>Rotas Ativas</p>
+                </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 8%
+                </div>
+            </div>
+            
+            <div class="stat-card-empresa">
+                <div class="stat-icon" style="background: #FFF7E6;">
+                    <i class="fas fa-users" style="color: #FA8C16;"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalPassageiros">1.254</h3>
+                    <p>Passageiros Hoje</p>
+                </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 24%
+                </div>
+            </div>
+            
+            <div class="stat-card-empresa">
+                <div class="stat-icon" style="background: #FFF0F6;">
+                    <i class="fas fa-money-bill-wave" style="color: #EB2F96;"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="receitaHoje">245.780</h3>
+                    <p>Receita (Kz)</p>
+                </div>
+                <div class="stat-trend down">
+                    <i class="fas fa-arrow-down"></i> 5%
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Mapa e Atividade -->
+            <div class="map-activity-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-map-marked-alt"></i> Mapa de Operação em Tempo Real</h2>
+                    <div class="map-filters">
+                        <select id="mapFilter">
+                            <option value="all">Todos os Veículos</option>
+                            <option value="livre">Apenas Livres</option>
+                            <option value="em_rota">Em Rota</option>
+                            <option value="cheio">Cheios</option>
+                        </select>
+                        <button class="btn-map-control" id="btnZoomAll">
+                            <i class="fas fa-expand"></i> Ver Tudo
+                        </button>
+                    </div>
+                </div>
+                <div id="empresaMap" class="empresa-map-container"></div>
+                <div class="map-legenda">
+                    <div class="legenda-item">
+                        <span class="legenda-color" style="background: #52C41A;"></span>
+                        <span>Disponível</span>
+                    </div>
+                    <div class="legenda-item">
+                        <span class="legenda-color" style="background: #1890FF;"></span>
+                        <span>Em Rota</span>
+                    </div>
+                    <div class="legenda-item">
+                        <span class="legenda-color" style="background: #FA8C16;"></span>
+                        <span>Cheio</span>
+                    </div>
+                    <div class="legenda-item">
+                        <span class="legenda-color" style="background: #F5222D;"></span>
+                        <span>Indisponível</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status da Frota -->
+            <div class="fleet-status-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Status da Frota</h2>
+                    <div class="time-filter">
+                        <select id="timeFilter">
+                            <option value="today">Hoje</option>
+                            <option value="week">Esta Semana</option>
+                            <option value="month">Este Mês</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="fleet-metrics">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Atividade da Frota</h4>
+                            <span class="metric-percentage">34%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 34%;"></div>
+                        </div>
+                        <p class="metric-description">Veículos em operação</p>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Eficiência</h4>
+                            <span class="metric-percentage">78%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 78%; background: #52C41A;"></div>
+                        </div>
+                        <p class="metric-description">Rotas concluídas no tempo</p>
+                    </div>
+                </div>
+                
+                <div class="status-distribution">
+                    <h4>Distribuição por Status</h4>
+                    <div class="distribution-chart">
+                        <div class="distribution-item">
+                            <div class="distribution-bar" style="height: 80%; background: #52C41A;"></div>
+                            <span>Livre</span>
+                            <span class="distribution-count">16</span>
+                        </div>
+                        <div class="distribution-item">
+                            <div class="distribution-bar" style="height: 60%; background: #1890FF;"></div>
+                            <span>Em Rota</span>
+                            <span class="distribution-count">8</span>
+                        </div>
+                        <div class="distribution-item">
+                            <div class="distribution-bar" style="height: 40%; background: #FA8C16;"></div>
+                            <span>Cheio</span>
+                            <span class="distribution-count">5</span>
+                        </div>
+                        <div class="distribution-item">
+                            <div class="distribution-bar" style="height: 20%; background: #F5222D;"></div>
+                            <span>Avariado</span>
+                            <span class="distribution-count">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-bottom">
+            <!-- Top Rotas e Alertas -->
+            <div class="bottom-left">
+                <div class="top-routes">
+                    <div class="section-header">
+                        <h2><i class="fas fa-route"></i> Top 5 Rotas</h2>
+                        <button class="btn-view-all">
+                            Ver Todas <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="routes-list">
+                        <div class="route-item">
+                            <div class="route-info">
+                                <div class="route-icon">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div>
+                                    <h4>Linha 5 - Centre</h4>
+                                    <p class="route-details">Centro → Benfica</p>
+                                </div>
+                            </div>
+                            <div class="route-stats">
+                                <span class="route-passengers">245/dia</span>
+                                <span class="route-earnings">45.200 Kz</span>
+                            </div>
+                        </div>
+                        
+                        <div class="route-item">
+                            <div class="route-info">
+                                <div class="route-icon">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div>
+                                    <h4>Linha 2 - UFP</h4>
+                                    <p class="route-details">UFP → Kilamba</p>
+                                </div>
+                            </div>
+                            <div class="route-stats">
+                                <span class="route-passengers">198/dia</span>
+                                <span class="route-earnings">38.500 Kz</span>
+                            </div>
+                        </div>
+                        
+                        <div class="route-item">
+                            <div class="route-info">
+                                <div class="route-icon">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div>
+                                    <h4>Linha 8 - Marginal</h4>
+                                    <p class="route-details">Marginal → Viana</p>
+                                </div>
+                            </div>
+                            <div class="route-stats">
+                                <span class="route-passengers">176/dia</span>
+                                <span class="route-earnings">32.800 Kz</span>
+                            </div>
+                        </div>
+                        
+                        <div class="route-item">
+                            <div class="route-info">
+                                <div class="route-icon">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div>
+                                    <h4>Linha 3 - Cazenga</h4>
+                                    <p class="route-details">Cazenga → Talatona</p>
+                                </div>
+                            </div>
+                            <div class="route-stats">
+                                <span class="route-passengers">154/dia</span>
+                                <span class="route-earnings">28.900 Kz</span>
+                            </div>
+                        </div>
+                        
+                        <div class="route-item">
+                            <div class="route-info">
+                                <div class="route-icon">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div>
+                                    <h4>Linha 1 - Aeroporto</h4>
+                                    <p class="route-details">Aeroporto → Centro</p>
+                                </div>
+                            </div>
+                            <div class="route-stats">
+                                <span class="route-passengers">142/dia</span>
+                                <span class="route-earnings">26.500 Kz</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alerts-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Alertas</h2>
+                        <span class="alerts-count">14</span>
+                    </div>
+                    <div class="alerts-list">
+                        <div class="alert-item critical">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>9 Atrasos</h5>
+                                <p>Rotas com atraso superior a 15min</p>
+                                <span class="alert-time">Última hora</span>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-item warning">
+                            <div class="alert-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>2 Veículos Indisponíveis</h5>
+                                <p>LD-1234 e LD-5678 em manutenção</p>
+                                <span class="alert-time">Desde ontem</span>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-item emergency">
+                            <div class="alert-icon">
+                                <i class="fas fa-ambulance"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>3 Emergências Reportadas</h5>
+                                <p>Passageiros necessitam de assistência</p>
+                                <span class="alert-time">Hoje</span>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-item info">
+                            <div class="alert-icon">
+                                <i class="fas fa-gas-pump"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>5 Veículos com Baixo Combustível</h5>
+                                <p>Nível abaixo de 25%</p>
+                                <span class="alert-time">Atualizado agora</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Atividade Recente e Mensagens -->
+            <div class="bottom-right">
+                <div class="recent-activity">
+                    <div class="section-header">
+                        <h2><i class="fas fa-history"></i> Atividade Recente</h2>
+                        <button class="btn-view-all">
+                            Ver Histórico <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="activity-timeline">
+                        <div class="activity-item">
+                            <div class="activity-time">14:30</div>
+                            <div class="activity-content">
+                                <p><strong>LD-1234</strong> iniciou rota Linha 5</p>
+                                <span class="activity-detail">Motorista: João Silva</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-time">14:15</div>
+                            <div class="activity-content">
+                                <p><strong>LD-5678</strong> reportou problema mecânico</p>
+                                <span class="activity-detail">Status: Em manutenção</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-time">13:45</div>
+                            <div class="activity-content">
+                                <p><strong>Novo passageiro</strong> registado no sistema</p>
+                                <span class="activity-detail">Total: 1.254 hoje</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-time">13:20</div>
+                            <div class="activity-content">
+                                <p><strong>Rota Linha 2</strong> concluída com atraso</p>
+                                <span class="activity-detail">15 minutos de atraso</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-time">12:55</div>
+                            <div class="activity-content">
+                                <p><strong>Pagamento processado</strong> via cartão</p>
+                                <span class="activity-detail">Valor: 2.500 Kz</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="messages-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-comments"></i> Mensagens para Motoristas</h2>
+                        <button class="btn-new-message" id="btnNewMessage">
+                            <i class="fas fa-plus"></i> Nova
+                        </button>
+                    </div>
+                    <div class="messages-list">
+                        <div class="message-item unread">
+                            <div class="message-header">
+                                <h5>Aviso: Trânsito na Marginal</h5>
+                                <span class="message-time">10:30</span>
+                            </div>
+                            <p class="message-preview">Evitem a Marginal entre 17h-19h devido a obras...</p>
+                            <div class="message-recipients">
+                                <span class="recipient-count">Enviado para 12 motoristas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="message-item">
+                            <div class="message-header">
+                                <h5>Reunião Mensal</h5>
+                                <span class="message-time">Ontem</span>
+                            </div>
+                            <p class="message-preview">Lembramos da reunião mensal amanhã às 10h...</p>
+                            <div class="message-recipients">
+                                <span class="recipient-count">Todos os motoristas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="message-item">
+                            <div class="message-header">
+                                <h5>Atualização de Rotas</h5>
+                                <span class="message-time">2 dias</span>
+                            </div>
+                            <p class="message-preview">Nova rota adicionada: Linha 9 - Benfica/Talatona...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Nova Mensagem -->
+        <div class="modal-empresa" id="messageModal">
+            <div class="modal-content-empresa">
+                <div class="modal-header-empresa">
+                    <h3><i class="fas fa-envelope"></i> Nova Mensagem</h3>
+                    <button class="btn-close-empresa">&times;</button>
+                </div>
+                <div class="modal-body-empresa">
+                    <div class="form-group-empresa">
+                        <label>Destinatários</label>
+                        <select id="messageRecipients" multiple>
+                            <option value="all">Todos os Motoristas</option>
+                            <option value="linha5">Motoristas Linha 5</option>
+                            <option value="linha2">Motoristas Linha 2</option>
+                            <option value="livres">Motoristas com Veículos Livres</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group-empresa">
+                        <label>Assunto</label>
+                        <input type="text" id="messageSubject" placeholder="Assunto da mensagem">
+                    </div>
+                    
+                    <div class="form-group-empresa">
+                        <label>Mensagem</label>
+                        <textarea id="messageContent" rows="5" placeholder="Digite sua mensagem..."></textarea>
+                    </div>
+                    
+                    <div class="form-group-empresa">
+                        <label>Tipo de Mensagem</label>
+                        <div class="message-types">
+                            <label class="message-type">
+                                <input type="radio" name="messageType" value="info" checked>
+                                <div class="type-icon info">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <span>Informativa</span>
+                            </label>
+                            <label class="message-type">
+                                <input type="radio" name="messageType" value="warning">
+                                <div class="type-icon warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <span>Aviso</span>
+                            </label>
+                            <label class="message-type">
+                                <input type="radio" name="messageType" value="alert">
+                                <div class="type-icon alert">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <span>Alerta</span>
+                            </label>
+                            <label class="message-type">
+                                <input type="radio" name="messageType" value="emergency">
+                                <div class="type-icon emergency">
+                                    <i class="fas fa-ambulance"></i>
+                                </div>
+                                <span>Emergência</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-empresa">
+                    <button class="btn-cancel-empresa">Cancelar</button>
+                    <button class="btn-send-empresa">
+                        <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="../../js/empresa.js"></script>
+</body>
+</html>

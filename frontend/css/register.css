@@ -1,0 +1,163 @@
+/* frontend/css/register.css */
+:root {
+    --angola-red: #ce1126;
+    --angola-black: #000000;
+    --angola-yellow: #fecb00;
+}
+
+.register-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.register-header {
+    background: linear-gradient(135deg, var(--angola-red) 0%, #a50e1f 100%);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+}
+
+.register-header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.register-header .logo i {
+    font-size: 2.2rem;
+}
+
+.register-header .logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.register-header p {
+    opacity: 0.9;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.angola-flag {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.register-tabs {
+    display: flex;
+    background: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    color: var(--dark-color);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    color: var(--angola-red);
+    border-bottom-color: var(--angola-red);
+    background: white;
+}
+
+.tab-btn:hover:not(.active) {
+    background: rgba(206, 17, 38, 0.1);
+}
+
+.register-form {
+    padding: 25px;
+    display: none;
+}
+
+.register-form.active {
+    display: block;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.phone-input {
+    display: flex;
+    align-items: center;
+    border: 2px solid #e3e6f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.phone-prefix {
+    padding: 0 12px;
+    background: #f8f9fc;
+    border-right: 2px solid #e3e6f0;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.phone-input input {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+}
+
+.phone-input input:focus {
+    outline: none;
+}
+
+.register-form select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e3e6f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: white;
+    color: var(--dark-color);
+    cursor: pointer;
+}
+
+.register-form select:focus {
+    border-color: var(--angola-red);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(206, 17, 38, 0.1);
+}
+
+.register-form select:disabled {
+    background: #f8f9fc;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.register-footer {
+    text-align: center;
+    padding: 15px;
+    color: var(--dark-color);
+    font-size: 0.85rem;
+    border-top: 1px solid #e3e6f0;
+    background: #f8f9fc;
+}
+
+.register-footer p:first-child {
+    color: var(--angola-red);
+    font-weight: 600;
+    margin-bottom: 5px;
+}

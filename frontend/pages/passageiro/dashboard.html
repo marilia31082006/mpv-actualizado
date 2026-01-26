@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUMBI - Passageiro</title>
+    <link rel="stylesheet" href="../../css/passageiro.css">
+    <link rel="stylesheet" href="../../css/mapa.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="user-info">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h3 id="userName">Carlos Silva</h3>
+                    <p class="user-type">Passageiro</p>
+                </div>
+            </div>
+            <button class="btn-menu" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Solicitar Viagem</span>
+            </a>
+            <a href="viagem.html" class="nav-item">
+                <i class="fas fa-car"></i>
+                <span>Viagem Atual</span>
+                <span class="badge" id="badgeViagem">0</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-history"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Favoritos</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-wallet"></i>
+                <span>Carteira</span>
+                <span class="saldo">5.000,00 Kz</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="location-status">
+                <i class="fas fa-crosshairs" id="locationIcon"></i>
+                <span id="locationStatus">Localizando...</span>
+            </div>
+            <button class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <h1>Solicitar Transporte</h1>
+                <p class="subtitle">Veículos disponíveis em tempo real</p>
+            </div>
+            <div class="header-right">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="time-display" id="currentTime"></div>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Mapa e Controles -->
+            <div class="map-section">
+                <div class="map-header">
+                    <h2><i class="fas fa-map"></i> Mapa de Luanda e Icolo e Bengo</h2>
+                    <div class="map-controls">
+                        <button class="btn-control" id="btnLocate">
+                            <i class="fas fa-location-crosshairs"></i> Minha Localização
+                        </button>
+                        <button class="btn-control" id="btnRefresh">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                    </div>
+                </div>
+                <div id="map" class="map-container"></div>
+                <div class="map-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-taxi" style="color: #0F9D58;"></i>
+                        <div>
+                            <h4 id="availableVehicles">12</h4>
+                            <p>Veículos Livres</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users" style="color: #2D5AA0;"></i>
+                        <div>
+                            <h4 id="nearbyDrivers">8</h4>
+                            <p>Motoristas Próximos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock" style="color: #F6AD55;"></i>
+                        <div>
+                            <h4 id="avgWaitTime">5</h4>
+                            <p>Min. Espera</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel de Solicitação -->
+            <div class="request-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-route"></i> Nova Corrida</h3>
+                    <div class="ride-type-selector">
+                        <button class="ride-type active" data-type="taxi">
+                            <i class="fas fa-taxi"></i>
+                            <span>Taxi</span>
+                        </button>
+                        <button class="ride-type" data-type="van">
+                            <i class="fas fa-van-shuttle"></i>
+                            <span>Van</span>
+                        </button>
+                        <button class="ride-type" data-type="bus">
+                            <i class="fas fa-bus"></i>
+                            <span>Ônibus</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <div class="input-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Origem</label>
+                        <div class="input-with-action">
+                            <input type="text" id="originInput" placeholder="Sua localização atual" readonly>
+                            <button class="btn-input-action" id="btnUseCurrent">
+                                <i class="fas fa-crosshairs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fas fa-flag-checkered"></i> Destino</label>
+                        <div class="input-with-action">
+                            <input type="text" id="destinationInput" placeholder="Para onde vamos?">
+                            <button class="btn-input-action" id="btnSearchDest">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="destination-suggestions" id="destSuggestions">
+                            <!-- Sugestões aparecem aqui -->
+                        </div>
+                    </div>
+
+                    <div class="route-options">
+                        <div class="option">
+                            <i class="fas fa-user-friends"></i>
+                            <div>
+                                <span>Passageiros</span>
+                                <div class="counter">
+                                    <button class="counter-btn" id="btnDecPass">-</button>
+                                    <span id="passengerCount">1</span>
+                                    <button class="counter-btn" id="btnIncPass">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <i class="fas fa-suitcase"></i>
+                            <div>
+                                <span>Bagagem</span>
+                                <select id="baggageSelect">
+                                    <option value="none">Nenhuma</option>
+                                    <option value="small">Pequena</option>
+                                    <option value="medium">Média</option>
+                                    <option value="large">Grande</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-estimate">
+                        <h4>Estimativa de Preço</h4>
+                        <div class="price-details">
+                            <div class="price-item">
+                                <span>Distância</span>
+                                <span id="distanceEstimate">-- km</span>
+                            </div>
+                            <div class="price-item">
+                                <span>Tempo</span>
+                                <span id="timeEstimate">-- min</span>
+                            </div>
+                            <div class="price-item total">
+                                <span>Total</span>
+                                <span id="totalPrice">-- Kz</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-method">
+                        <h4>Forma de Pagamento</h4>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="cash" checked>
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>Dinheiro</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="card">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Cartão</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="wallet">
+                                <i class="fas fa-wallet"></i>
+                                <span>Carteira KUVIKA</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn-request" id="btnRequestRide">
+                        <i class="fas fa-car"></i>
+                        SOLICITAR VEÍCULO
+                        <span id="vehicleCount">(12 disponíveis)</span>
+                    </button>
+
+                    <div class="safety-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Sua segurança é nossa prioridade. Todos os motoristas são verificados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Solicitação Confirmada -->
+        <div class="modal" id="requestModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-check-circle"></i> Corrida Solicitada!</h3>
+                    <button class="btn-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="driver-match">
+                        <div class="driver-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="driver-info">
+                            <h4 id="driverName">Procurando motorista...</h4>
+                            <p id="driverDetails">Aguardando aceitação</p>
+                            <div class="driver-rating">
+                                <i class="fas fa-star"></i>
+                                <span id="driverRating">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vehicle-info">
+                        <div class="vehicle-details">
+                            <i class="fas fa-taxi"></i>
+                            <div>
+                                <h5 id="vehicleModel">Taxi</h5>
+                                <p id="vehiclePlate">Matrícula: --- ---</p>
+                            </div>
+                        </div>
+                        <div class="vehicle-color" id="vehicleColor"></div>
+                    </div>
+                    <div class="wait-time">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <p>Tempo estimado de chegada</p>
+                            <h2 id="etaTime">-- min</h2>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-cancel" id="btnCancelRide">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button class="btn-call" id="btnCallDriver">
+                            <i class="fas fa-phone"></i> Ligar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="../../js/mapa.js"></script>
+    <script src="../../js/passageiro.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUMBI - Motorista</title>
+    <link rel="stylesheet" href="../../css/motorista.css">
+    <link rel="stylesheet" href="../../css/mapa.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+    <!-- Sidebar Motorista -->
+    <div class="sidebar-motorista">
+        <div class="driver-header">
+            <div class="driver-profile">
+                <div class="driver-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="driver-info">
+                    <h3 id="driverName">João Fernandes</h3>
+                    <p class="driver-id">Motorista #MD-2541</p>
+                    <div class="driver-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.8</span>
+                        <span class="rating-count">(127 viagens)</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-menu-driver" id="menuToggleDriver">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="driver-status">
+            <h4>Status do Veículo</h4>
+            <div class="status-options">
+                <label class="status-option">
+                    <input type="radio" name="status" value="livre" checked>
+                    <div class="status-indicator livre"></div>
+                    <span>Livre</span>
+                </label>
+                <label class="status-option">
+                    <input type="radio" name="status" value="cheio">
+                    <div class="status-indicator cheio"></div>
+                    <span>Cheio</span>
+                </label>
+                <label class="status-option">
+                    <input type="radio" name="status" value="em_rota">
+                    <div class="status-indicator em-rota"></div>
+                    <span>Em Rota</span>
+                </label>
+                <label class="status-option">
+                    <input type="radio" name="status" value="avariado">
+                    <div class="status-indicator avariado"></div>
+                    <span>Avariado</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="vehicle-info-card">
+            <h4><i class="fas fa-car"></i> Veículo Atual</h4>
+            <div class="vehicle-details">
+                <div class="detail">
+                    <span class="label">Matrícula:</span>
+                    <span class="value" id="vehiclePlate">LD-1234-LA</span>
+                </div>
+                <div class="detail">
+                    <span class="label">Modelo:</span>
+                    <span class="value" id="vehicleModel">Toyota Hiace</span>
+                </div>
+                <div class="detail">
+                    <span class="label">Capacidade:</span>
+                    <span class="value" id="vehicleCapacity">15 passageiros</span>
+                </div>
+                <div class="detail">
+                    <span class="label">Empresa:</span>
+                    <span class="value" id="vehicleCompany">Transangol</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <h4><i class="fas fa-chart-line"></i> Hoje</h4>
+            <div class="stats-grid">
+                <div class="stat">
+                    <span class="stat-value" id="todayRides">8</span>
+                    <span class="stat-label">Corridas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="todayEarnings">25.400</span>
+                    <span class="stat-label">Kz</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="todayHours">6.5</span>
+                    <span class="stat-label">Horas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="todayRating">4.9</span>
+                    <span class="stat-label">Avaliação</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="driver-nav">
+            <a href="dashboard.html" class="driver-nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Painel</span>
+            </a>
+            <a href="corridas.html" class="driver-nav-item">
+                <i class="fas fa-list"></i>
+                <span>Corridas</span>
+                <span class="badge" id="ridesBadge">2</span>
+            </a>
+            <a href="perfil.html" class="driver-nav-item">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="#" class="driver-nav-item">
+                <i class="fas fa-wallet"></i>
+                <span>Ganhos</span>
+            </a>
+            <a href="#" class="driver-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="driver-footer">
+            <button class="btn-gps" id="btnToggleGPS">
+                <i class="fas fa-satellite"></i>
+                <span>GPS: <span id="gpsStatus">Ativo</span></span>
+            </button>
+            <button class="btn-logout-driver">
+                <i class="fas fa-sign-out-alt"></i>
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Motorista -->
+    <div class="main-content-motorista">
+        <header class="driver-main-header">
+            <div class="header-left-driver">
+                <h1>Painel do Motorista</h1>
+                <p class="subtitle-driver" id="locationInfo">Luanda, Angola</p>
+            </div>
+            <div class="header-right-driver">
+                <div class="time-display-driver" id="driverTime"></div>
+                <div class="notification-driver">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count-driver">3</span>
+                </div>
+                <div class="battery-indicator">
+                    <i class="fas fa-battery-three-quarters"></i>
+                    <span>78%</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="driver-content-wrapper">
+            <!-- Mapa Motorista -->
+            <div class="driver-map-section">
+                <div class="driver-map-header">
+                    <h2><i class="fas fa-map-marked-alt"></i> Mapa de Operação</h2>
+                    <div class="driver-map-controls">
+                        <button class="btn-driver-control" id="btnCenterMap">
+                            <i class="fas fa-location-crosshairs"></i> Centralizar
+                        </button>
+                        <button class="btn-driver-control" id="btnToggleTraffic">
+                            <i class="fas fa-traffic-light"></i> Trânsito
+                        </button>
+                    </div>
+                </div>
+                <div id="driverMap" class="driver-map-container"></div>
+                <div class="driver-location-info">
+                    <div class="location-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Sua Localização</h4>
+                            <p id="currentLocation">Carregando...</p>
+                        </div>
+                    </div>
+                    <div class="location-card">
+                        <i class="fas fa-speedometer"></i>
+                        <div>
+                            <h4>Velocidade</h4>
+                            <p id="currentSpeed">0 km/h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel de Corridas -->
+            <div class="rides-panel">
+                <div class="rides-header">
+                    <h3><i class="fas fa-bullhorn"></i> Corridas Disponíveis</h3>
+                    <div class="rides-filter">
+                        <select id="ridesFilter">
+                            <option value="all">Todas as corridas</option>
+                            <option value="nearby">Próximas a mim</option>
+                            <option value="high_value">Maior valor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="rides-list" id="ridesList">
+                    <!-- Corridas serão carregadas aqui -->
+                </div>
+
+                <!-- Corrida Ativa -->
+                <div class="active-ride-card" id="activeRideCard" style="display: none;">
+                    <div class="active-ride-header">
+                        <h4><i class="fas fa-route"></i> Corrida em Andamento</h4>
+                        <span class="ride-timer" id="rideTimer">00:00</span>
+                    </div>
+                    <div class="passenger-info">
+                        <div class="passenger-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="passenger-details">
+                            <h5 id="passengerName">Maria Santos</h5>
+                            <p class="passenger-rating">
+                                <i class="fas fa-star"></i>
+                                4.9 • 42 viagens
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ride-route">
+                        <div class="route-point">
+                            <div class="point-marker start"></div>
+                            <div>
+                                <p class="point-label">Partida</p>
+                                <p class="point-address" id="startAddress">Avenida 4 de Fevereiro</p>
+                            </div>
+                        </div>
+                        <div class="route-divider">
+                            <div class="divider-line"></div>
+                            <div class="distance">2.5 km</div>
+                        </div>
+                        <div class="route-point">
+                            <div class="point-marker end"></div>
+                            <div>
+                                <p class="point-label">Destino</p>
+                                <p class="point-address" id="endAddress">Hospital Josina Machel</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ride-payment">
+                        <div class="payment-detail">
+                            <span>Valor da Corrida:</span>
+                            <span class="payment-value" id="rideValue">2.500 Kz</span>
+                        </div>
+                        <div class="payment-detail">
+                            <span>Forma de Pagamento:</span>
+                            <span class="payment-value" id="paymentMethod">Dinheiro</span>
+                        </div>
+                    </div>
+                    <div class="ride-actions">
+                        <button class="btn-ride-action" id="btnStartRide">
+                            <i class="fas fa-play"></i> Iniciar Viagem
+                        </button>
+                        <button class="btn-ride-action" id="btnCompleteRide">
+                            <i class="fas fa-flag-checkered"></i> Finalizar
+                        </button>
+                        <button class="btn-ride-action btn-call-ride" id="btnCallPassenger">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Histórico Rápido -->
+                <div class="quick-history">
+                    <h4><i class="fas fa-history"></i> Últimas Corridas</h4>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <div class="history-info">
+                                <span class="history-time">15:30</span>
+                                <span class="history-route">Marginal → Benfica</span>
+                            </div>
+                            <span class="history-value">1.800 Kz</span>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-info">
+                                <span class="history-time">14:15</span>
+                                <span class="history-route">Cazenga → Talatona</span>
+                            </div>
+                            <span class="history-value">3.200 Kz</span>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-info">
+                                <span class="history-time">12:45</span>
+                                <span class="history-route">Kilamba → Viana</span>
+                            </div>
+                            <span class="history-value">2.100 Kz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Aceitação de Corrida -->
+        <div class="modal-driver" id="rideRequestModal">
+            <div class="modal-content-driver">
+                <div class="modal-header-driver">
+                    <h3><i class="fas fa-bell"></i> Nova Corrida!</h3>
+                    <span class="request-timer" id="requestTimer">30</span>
+                </div>
+                <div class="modal-body-driver">
+                    <div class="request-info">
+                        <div class="request-passenger">
+                            <div class="request-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h4 id="requestPassenger">Passageiro</h4>
+                                <p class="request-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span id="requestRating">4.8</span>
+                                </p>
+                            </div>
+                            <div class="request-distance">
+                                <i class="fas fa-location-arrow"></i>
+                                <span id="requestDistance">1.2 km</span>
+                            </div>
+                        </div>
+                        <div class="request-route">
+                            <div class="request-point">
+                                <div class="point-icon pickup"></div>
+                                <div>
+                                    <p class="point-title">Partida</p>
+                                    <p id="requestPickup">Avenida 4 de Fevereiro, Luanda</p>
+                                </div>
+                            </div>
+                            <div class="request-point">
+                                <div class="point-icon dropoff"></div>
+                                <div>
+                                    <p class="point-title">Destino</p>
+                                    <p id="requestDropoff">Hospital Josina Machel</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="request-details">
+                            <div class="detail-item">
+                                <i class="fas fa-users"></i>
+                                <span id="requestPassengers">1 passageiro</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-suitcase"></i>
+                                <span id="requestBaggage">Sem bagagem</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span id="requestPayment">Dinheiro</span>
+                            </div>
+                        </div>
+                        <div class="request-price">
+                            <span>Valor Estimado:</span>
+                            <span class="price-value" id="requestPrice">2.500 Kz</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-reject" id="btnRejectRide">
+                            <i class="fas fa-times"></i> Recusar
+                        </button>
+                        <button class="btn-accept" id="btnAcceptRide">
+                            <i class="fas fa-check"></i> Aceitar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="../../js/motorista.js"></script>
+</body>
+</html>

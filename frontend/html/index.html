@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUMBI - Sistema de Transporte</title>
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="logo">
+                <i class="fas fa-bus"></i>
+                <h1>KUMBI</h1>
+            </div>
+            <p>Sistema Inteligente de Transporte em Angola</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="login">Entrar</button>
+            <button class="tab-btn" data-tab="register">Cadastrar</button>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="loginForm" class="auth-form active">
+            <div class="form-group">
+                <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="loginPassword"><i class="fas fa-lock"></i> Senha</label>
+                <input type="password" id="loginPassword" placeholder="Sua senha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="userType"><i class="fas fa-user-tag"></i> Tipo de Usuário</label>
+                <select id="userType" required>
+                    <option value="">Selecione...</option>
+                    <option value="passageiro">Passageiro</option>
+                    <option value="motorista">Motorista</option>
+                    <option value="empresa">Empresa</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+        </form>
+
+        <!-- Formulário de Cadastro -->
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="regName"><i class="fas fa-user"></i> Nome Completo</label>
+                <input type="text" id="regName" placeholder="Seu nome completo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="regEmail" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regPhone"><i class="fas fa-phone"></i> Telefone</label>
+                <input type="tel" id="regPhone" placeholder="+244 XXX XXX XXX" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword"><i class="fas fa-lock"></i> Senha</label>
+                <input type="password" id="regPassword" placeholder="Mínimo 8 caracteres" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regUserType"><i class="fas fa-user-tag"></i> Sou um:</label>
+                <select id="regUserType" required onchange="toggleRegistrationFields()">
+                    <option value="">Selecione...</option>
+                    <option value="passageiro">Passageiro</option>
+                    <option value="motorista">Motorista</option>
+                    <option value="empresa">Empresa</option>
+                </select>
+            </div>
+
+            <!-- Campos específicos para Motorista -->
+            <div id="motoristaFields" class="extra-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="regCartaConducao"><i class="fas fa-id-card"></i> Carta de Condução</label>
+                    <input type="text" id="regCartaConducao" placeholder="Número da carta">
+                </div>
+                <div class="form-group">
+                    <label for="regEmpresa"><i class="fas fa-building"></i> Empresa Vinculada</label>
+                    <input type="text" id="regEmpresa" placeholder="Nome da empresa">
+                </div>
+            </div>
+
+            <!-- Campos específicos para Empresa -->
+            <div id="empresaFields" class="extra-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="regNIF"><i class="fas fa-file-invoice"></i> NIF da Empresa</label>
+                    <input type="text" id="regNIF" placeholder="Número de Identificação Fiscal">
+                </div>
+                <div class="form-group">
+                    <label for="regEndereco"><i class="fas fa-map-marker-alt"></i> Endereço</label>
+                    <input type="text" id="regEndereco" placeholder="Endereço da empresa">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-user-plus"></i> Criar Conta
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Ao cadastrar-se, você concorda com nossos <a href="./index5.html">Termos de Uso</a> e <a href="#">Política de Privacidade</a>.</p>
+            <p class="map-note">Atualmente disponível em Luanda e Icolo e Bengo</p>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

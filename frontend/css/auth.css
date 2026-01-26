@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #F5F7FA 0%, #E4E8F0 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(26, 54, 93, 0.1);
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #1A365D 0%, #2D5AA0 50%, #0F9D58 100%);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: #2D5AA0;
+}
+
+.logo h1 {
+    color: #1A365D;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.auth-header p {
+    color: #4A5568;
+    font-size: 0.95rem;
+}
+
+.auth-tabs {
+    display: flex;
+    background: #F5F7FA;
+    border-radius: 12px;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: #4A5568;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: white;
+    color: #1A365D;
+    box-shadow: 0 3px 10px rgba(26, 54, 93, 0.1);
+}
+
+.auth-form {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1A365D;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-group label i {
+    color: #2D5AA0;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #E2E8F0;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2D3748;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2D5AA0;
+    box-shadow: 0 0 0 3px rgba(45, 90, 160, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #A0AEC0;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #1A365D 0%, #2D5AA0 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2D5AA0 0%, #1A365D 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(26, 54, 93, 0.2);
+}
+
+.extra-fields {
+    background: #F8FAFC;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 4px solid #0F9D58;
+}
+
+.auth-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #718096;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.auth-footer a {
+    color: #2D5AA0;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.map-note {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #E6FFFA;
+    color: #234E52;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: 500;
+    border: 1px solid #B2F5EA;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    .auth-container {
+        padding: 30px 20px;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+}

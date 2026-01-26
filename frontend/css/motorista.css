@@ -1,0 +1,1135 @@
+/* Estilos Específicos do Motorista */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #F5F7FA;
+    color: #1A365D;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Sidebar Motorista */
+.sidebar-motorista {
+    width: 320px;
+    background: white;
+    box-shadow: 5px 0 15px rgba(26, 54, 93, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.driver-header {
+    padding: 25px 20px;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.driver-profile {
+    display: flex;
+    gap: 15px;
+}
+
+.driver-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #1A365D, #2D5AA0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.driver-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.driver-id {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.driver-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #F6AD55;
+    font-weight: 600;
+}
+
+.rating-count {
+    color: #A0AEC0;
+    font-size: 0.85rem;
+    font-weight: normal;
+}
+
+.btn-menu-driver {
+    background: none;
+    border: none;
+    color: #4A5568;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-menu-driver:hover {
+    background: #F5F7FA;
+    color: #1A365D;
+}
+
+/* Status do Veículo */
+.driver-status {
+    padding: 20px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.driver-status h4 {
+    margin-bottom: 15px;
+    color: #1A365D;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.status-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 10px;
+    border: 2px solid #E2E8F0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.status-option input {
+    display: none;
+}
+
+.status-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.status-indicator.livre { background: #0F9D58; }
+.status-indicator.cheio { background: #E53E3E; }
+.status-indicator.em-rota { background: #F6AD55; }
+.status-indicator.avariado { background: #718096; }
+
+.status-option:has(input:checked) {
+    border-color: #2D5AA0;
+    background: #F5F7FA;
+}
+
+/* Informação do Veículo */
+.vehicle-info-card {
+    padding: 20px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.vehicle-info-card h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: #1A365D;
+}
+
+.vehicle-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.detail:last-child {
+    border-bottom: none;
+}
+
+.label {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.value {
+    color: #1A365D;
+    font-weight: 600;
+}
+
+/* Estatísticas */
+.stats-card {
+    padding: 20px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.stats-card h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: #1A365D;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.stat {
+    text-align: center;
+    padding: 15px;
+    background: #F8FAFC;
+    border-radius: 10px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2D5AA0;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+/* Navegação Motorista */
+.driver-nav {
+    flex: 1;
+    padding: 20px 0;
+}
+
+.driver-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    color: #4A5568;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 4px solid transparent;
+}
+
+.driver-nav-item:hover {
+    background: #F8FAFC;
+    color: #1A365D;
+}
+
+.driver-nav-item.active {
+    background: linear-gradient(90deg, rgba(26, 54, 93, 0.1) 0%, rgba(26, 54, 93, 0.05) 100%);
+    color: #1A365D;
+    border-left-color: #2D5AA0;
+}
+
+.driver-nav-item i {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.driver-nav-item .badge {
+    background: #E53E3E;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+/* Footer Motorista */
+.driver-footer {
+    padding: 20px;
+    border-top: 1px solid #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-gps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    background: #F0FFF4;
+    border: 2px solid #C6F6D5;
+    border-radius: 10px;
+    color: #22543D;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-gps:hover {
+    background: #C6F6D5;
+}
+
+.btn-logout-driver {
+    padding: 12px;
+    background: #F5F7FA;
+    color: #E53E3E;
+    border: 2px solid #FED7D7;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-logout-driver:hover {
+    background: #FED7D7;
+}
+
+/* Main Content Motorista */
+.main-content-motorista {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.driver-main-header {
+    padding: 20px 30px;
+    background: white;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left-driver h1 {
+    font-size: 1.8rem;
+    color: #1A365D;
+    margin-bottom: 5px;
+}
+
+.subtitle-driver {
+    color: #718096;
+    font-size: 0.95rem;
+}
+
+.header-right-driver {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.time-display-driver {
+    background: #F8FAFC;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    color: #2D5AA0;
+}
+
+.notification-driver {
+    position: relative;
+    font-size: 1.3rem;
+    color: #4A5568;
+    cursor: pointer;
+}
+
+.notification-count-driver {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #E53E3E;
+    color: white;
+    font-size: 0.8rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.battery-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0F9D58;
+    font-weight: 600;
+}
+
+/* Content Wrapper */
+.driver-content-wrapper {
+    flex: 1;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 25px;
+}
+
+/* Map Section */
+.driver-map-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.driver-map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.driver-map-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+}
+
+.driver-map-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-driver-control {
+    padding: 10px 20px;
+    background: white;
+    border: 2px solid #E2E8F0;
+    border-radius: 8px;
+    color: #1A365D;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-driver-control:hover {
+    background: #F8FAFC;
+    border-color: #2D5AA0;
+}
+
+.driver-map-container {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(26, 54, 93, 0.15);
+    border: 3px solid white;
+}
+
+/* Location Info */
+.driver-location-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.location-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.location-card i {
+    font-size: 2rem;
+    color: #2D5AA0;
+}
+
+.location-card h4 {
+    font-size: 1rem;
+    color: #718096;
+    margin-bottom: 5px;
+}
+
+.location-card p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1A365D;
+}
+
+/* Rides Panel */
+.rides-panel {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.rides-header {
+    padding: 25px;
+    background: linear-gradient(135deg, #1A365D, #2D5AA0);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rides-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+}
+
+.rides-filter select {
+    padding: 10px 15px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-weight: 500;
+    min-width: 180px;
+}
+
+.rides-filter select option {
+    background: white;
+    color: #1A365D;
+}
+
+/* Rides List */
+.rides-list {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.ride-card {
+    background: #F8FAFC;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ride-card:hover {
+    border-color: #2D5AA0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45, 90, 160, 0.1);
+}
+
+.ride-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ride-passenger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.passenger-avatar-sm {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #1A365D, #2D5AA0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.ride-distance {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.ride-route-sm {
+    margin-bottom: 15px;
+}
+
+.route-point-sm {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.point-marker-sm {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.point-marker-sm.start { background: #0F9D58; }
+.point-marker-sm.end { background: #E53E3E; }
+
+.point-address-sm {
+    font-size: 0.9rem;
+    color: #4A5568;
+}
+
+.ride-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.detail-item-sm {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #718096;
+}
+
+.ride-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-value-sm {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0F9D58;
+}
+
+.btn-accept-sm {
+    padding: 8px 20px;
+    background: #0F9D58;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-accept-sm:hover {
+    background: #0D8E4A;
+}
+
+/* Active Ride Card */
+.active-ride-card {
+    margin: 20px;
+    padding: 25px;
+    background: linear-gradient(135deg, #F0FFF4, #E6FFFA);
+    border-radius: 15px;
+    border: 3px solid #0F9D58;
+}
+
+.active-ride-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.active-ride-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1A365D;
+}
+
+.ride-timer {
+    background: #0F9D58;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-family: monospace;
+    font-size: 1.1rem;
+}
+
+.passenger-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+}
+
+.passenger-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #F6AD55, #ED8936);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.passenger-details h5 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.passenger-rating {
+    color: #718096;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ride-route {
+    margin-bottom: 20px;
+}
+
+.route-point {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.point-marker {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.point-marker.start { background: #0F9D58; }
+.point-marker.end { background: #E53E3E; }
+
+.point-label {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 3px;
+}
+
+.point-address {
+    font-weight: 500;
+    color: #1A365D;
+}
+
+.route-divider {
+    position: relative;
+    height: 40px;
+    margin-left: 12px;
+}
+
+.divider-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: #CBD5E0;
+}
+
+.distance {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: #718096;
+    border: 1px solid #CBD5E0;
+}
+
+.ride-payment {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.payment-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.payment-detail:last-child {
+    border-bottom: none;
+}
+
+.payment-value {
+    font-weight: 600;
+    color: #0F9D58;
+}
+
+.ride-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+}
+
+.btn-ride-action {
+    padding: 15px;
+    background: #2D5AA0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-ride-action:hover {
+    background: #1A365D;
+}
+
+.btn-call-ride {
+    background: #0F9D58;
+    width: 60px;
+}
+
+.btn-call-ride:hover {
+    background: #0D8E4A;
+}
+
+/* Quick History */
+.quick-history {
+    padding: 20px;
+    border-top: 1px solid #E2E8F0;
+}
+
+.quick-history h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: #1A365D;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #F8FAFC;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    background: #EDF2F7;
+}
+
+.history-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.history-time {
+    font-weight: 600;
+    color: #2D5AA0;
+    min-width: 45px;
+}
+
+.history-route {
+    color: #4A5568;
+    font-size: 0.9rem;
+}
+
+.history-value {
+    font-weight: 600;
+    color: #0F9D58;
+}
+
+/* Modal Driver */
+.modal-driver {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content-driver {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header-driver {
+    padding: 25px;
+    background: linear-gradient(135deg, #1A365D, #2D5AA0);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.request-timer {
+    background: rgba(255,255,255,0.2);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.modal-body-driver {
+    padding: 25px;
+}
+
+.request-passenger {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.request-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #1A365D, #2D5AA0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.request-distance {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #718096;
+}
+
+.request-route {
+    margin-bottom: 20px;
+}
+
+.request-point {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.point-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.point-icon.pickup { background: #0F9D58; }
+.point-icon.dropoff { background: #E53E3E; }
+
+.point-title {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 3px;
+}
+
+.request-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #F8FAFC;
+    border-radius: 10px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+}
+
+.detail-item i {
+    color: #2D5AA0;
+    font-size: 1.2rem;
+}
+
+.detail-item span {
+    font-size: 0.85rem;
+    color: #4A5568;
+}
+
+.request-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #F0FFF4;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.price-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0F9D58;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-reject, .btn-accept {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-reject {
+    background: #FED7D7;
+    color: #E53E3E;
+}
+
+.btn-reject:hover {
+    background: #FEB2B2;
+}
+
+.btn-accept {
+    background: linear-gradient(135deg, #0F9D58, #34A853);
+    color: white;
+}
+
+.btn-accept:hover {
+    background: linear-gradient(135deg, #0D8E4A, #2E7D32);
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    .driver-content-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-motorista {
+        position: fixed;
+        left: -320px;
+    }
+    
+    .sidebar-motorista.active {
+        left: 0;
+    }
+    
+    .main-content-motorista {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .driver-main-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .driver-location-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .ride-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+}
